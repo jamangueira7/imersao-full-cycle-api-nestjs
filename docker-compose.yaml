@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
 
@@ -11,10 +11,16 @@ services:
       - .:/home/node/app
     depends_on:
       - db
+    networks:
+      - simulador_default
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
 
   db:
     image: mongo:4.4.4
     restart: always
+    networks:
+      - simulador_default
     volumes:
       - ./.docker/dbdata:/data/db
       - ./.docker/mongo:/docker-entrypoint-initdb.d
@@ -26,6 +32,8 @@ services:
   mongo-express:
     image: mongo-express
     restart: always
+    networks:
+      - simulador_default
     ports:
       - 8081:8081
     environment:
@@ -36,3 +44,9 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=root
     depends_on:
       - db
+
+
+networks:
+  simulador_default:
+    name: simulador_default
+    external: true

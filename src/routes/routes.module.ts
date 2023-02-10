@@ -3,8 +3,7 @@ import { RoutesService } from './routes.service';
 import { RoutesController } from './routes.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Route, RouteSchema } from "./entities/route.entity";
-import {ClientsModule, Transport} from '@nestjs/microservices';
-import * as process from "process";
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -14,12 +13,12 @@ import * as process from "process";
     ClientsModule.registerAsync([
       {
         name: 'KAFKA_SERVICE',
-        useFactory: () => ({
+        useFactory: (): any => ({
           transport: Transport.KAFKA,
           options: {
             client: {
-              clientId: process.env.KAFKA_CLIENT_ID,
-              brokers: [process.env.KAFKA_BROKER],
+              clientId: "code-delivery",
+              brokers: ["host.docker.internal:9094"],
             },
             consumer: {
               groupId:

@@ -1,15 +1,15 @@
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RoutesModule } from './routes/routes.module';
-import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     RoutesModule,
-    MongooseModule.forRoot(process.env.MONGO_DSN, {
+    MongooseModule.forRoot("mongodb://root:root@db/nest?authSource=admin", {
       useNewUrlParser: true,
     })
   ],
