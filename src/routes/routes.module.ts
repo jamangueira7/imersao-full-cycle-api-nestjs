@@ -13,12 +13,12 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ClientsModule.registerAsync([
       {
         name: 'KAFKA_SERVICE',
-        useFactory: (): any => ({
+        useFactory: () => ({
           transport: Transport.KAFKA,
           options: {
             client: {
-              clientId: "code-delivery",
-              brokers: ["host.docker.internal:9094"],
+              clientId: 'code-delivery',
+              brokers: ['host.docker.internal:9094'],
             },
             consumer: {
               groupId:
@@ -30,7 +30,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           },
         }),
       },
-    ])
+    ]),
   ],
   controllers: [RoutesController],
   providers: [RoutesService]

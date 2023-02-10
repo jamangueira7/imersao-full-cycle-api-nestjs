@@ -12,7 +12,7 @@ import {
 import { RoutesService } from './routes.service';
 import { CreateRouteDto } from './dto/create-route.dto';
 import { UpdateRouteDto } from './dto/update-route.dto';
-import { ClientKafka } from '@nestjs/microservices';
+import { ClientKafka, Payload, MessagePattern } from '@nestjs/microservices';
 import { Producer } from '@nestjs/microservices/external/kafka.interface';
 
 @Controller('routes')
@@ -57,13 +57,26 @@ export class RoutesController implements OnModuleInit{
   @Get(':id/start')
   startRoute(@Param('id') id: string) {
     this.kafkaProducer.send({
-      topic: "route.new-direction",
+      topic: 'route.new-direction',
       messages: [
         {
-          key: "route.new-direction",
+          key: 'route.new-direction',
           value: JSON.stringify({ routeId: id, clientId: '' }),
         },
       ],
     });
+  }
+
+  @MessagePattern('route.new-position')
+  consumeNewPosition(
+    @Payload() message: {
+      value: {
+        routeId: string;
+        clientId: string,
+        position: [number, number];
+        finished: boolean;
+      }
+    }) {
+    console.log(message);
   }
 }
