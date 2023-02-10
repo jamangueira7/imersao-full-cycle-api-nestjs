@@ -10,13 +10,13 @@ export class RoutesService {
   
   constructor(
     @InjectModel (Route.name) private routeModel: Model<RouteDocument>
-  ) {
-  }
+  ) {}
+
   create(createRouteDto: CreateRouteDto) {
     return 'This action adds a new route';
   }
 
-  findAll() {
+  findAll(): Promise<RouteDocument[]> {
     return this.routeModel.find().exec();
   }
 
