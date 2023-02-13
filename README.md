@@ -8,7 +8,7 @@
 
 <br>
 
-## Full Cycle - Simulador Go
+## Full Cycle - API Nest
 
 <p align="center">
   <img alt="producer" src=".github/img.png">
@@ -28,6 +28,7 @@ Backend em NestJS.
 
 [Simulador](https://github.com/jamangueira7/imersao-full-cycle-simulator-go)
 
+[apache-kafka](https://github.com/jamangueira7/imersao-full-cycle-apache-kafka)
 
 ## 🚀 Como Rodar
 
