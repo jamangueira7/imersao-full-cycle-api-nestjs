@@ -4,6 +4,7 @@ import { RoutesController } from './routes.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Route, RouteSchema } from "./entities/route.entity";
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RoutesGateway } from './routes.gateway';
 
 @Module({
   imports: [
@@ -12,19 +13,19 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
     ClientsModule.registerAsync([
       {
-        name: 'KAFKA_SERVICE',
-        useFactory: () => ({
+        name: "KAFKA_SERVICE",
+        useFactory: (): any => ({
           transport: Transport.KAFKA,
           options: {
             client: {
-              clientId: 'code-delivery',
-              brokers: ['host.docker.internal:9094'],
+              clientId: "code-delivery",
+              brokers: ["host.docker.internal:9094"],
             },
             consumer: {
               groupId:
                 !process.env.KAFKA_CONSUMER_GROUP_ID ||
                 process.env.KAFKA_CONSUMER_GROUP_ID === ''
-                  ? 'my-consumer-' + Math.random()
+                  ? "my-consumer-" + Math.random()
                   : process.env.KAFKA_CONSUMER_GROUP_ID,
             },
           },
@@ -33,6 +34,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ],
   controllers: [RoutesController],
-  providers: [RoutesService]
+  providers: [RoutesService, RoutesGateway]
 })
 export class RoutesModule {}
